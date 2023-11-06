@@ -1,0 +1,42 @@
+﻿@model Post
+
+<div style="padding: 20px; background-color: rgb(120, 180, 240);
+               border-radius: 25px; box-shadow: 0 0 15px rgb(100, 170, 200);
+               color: white;"
+     class="mb-3">
+    <p class="mb-3">
+        Autor: @Model.Author
+    </p>
+    <p class="mb-3">
+        Data publikacji: @Model.PublicationDate
+    </p>
+    <p class="mb-3">
+        Treść posta: @Model.Content
+    </p>
+    <p>
+        Tagi: @Model.Tags
+    </p>
+
+    <p>Liczba komentarzy: @Model.Comments.Count</p>
+    <p class="mb-3">Komentarze:</p>
+
+    <form asp-controller="Post" asp-action="Details" method="post">
+        <input asp-for="Id" />
+        <label class="mb-3">
+            Dodaj komentarz
+        </label>
+        <input class="form-control mb-3" for="Comment" />
+        <span class="text-danger"></span>
+        <button type="submit" class="btn btn-secondary rounded">
+            Potwierdź
+        </button>
+    </form>
+
+    @foreach (var item in Model.Comments)
+        {
+            <p class="mb-3">@item</p>
+        }
+
+</div>
+
+<a class="mt-4 btn btn-secondary" asp-action="Index">Powrót</a>

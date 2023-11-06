@@ -1,0 +1,36 @@
+﻿@model List<Post>
+
+
+<h1>
+    Posty
+</h1>
+
+<a class="btn btn-primary mb-5 rounded" asp-controller="Post" asp-action="Create">
+    Dodaj post
+</a>
+@if (Model.Count > 0)
+{
+    foreach (var item in @Model)
+    {
+        <div style="padding: 20px; background-color: rgb(120, 180, 240);
+               border-radius: 25px; box-shadow: 0 0 15px rgb(100, 170, 200);
+               color: white;"
+             class="mb-3">
+            <p class="mb-3">
+                @Html.DisplayNameFor(i => Model[0].Author): @item.Author
+
+            </p>
+            <p class="mb-3">
+                @Html.DisplayNameFor(i => Model[0].PublicationDate): @item.PublicationDate
+
+            </p>
+            <p class="mb-3">
+                @Html.DisplayNameFor(i => Model[0].Content): @item.Content
+
+            </p>
+            <a class="btn btn-secondary rounded" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id">Edytuj</a>
+            <a class="btn btn-dark rounded" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
+            <a class="btn btn-warning rounded" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+        </div>
+    }
+}

@@ -1,0 +1,29 @@
+﻿@model Post
+<h3>
+    Dodaj post
+</h3>
+<div>
+    <form asp-controller="Post" asp-action="Create" method="post">
+        <div class="mb-4">
+            <label class="mb-2" asp-for="Author"></label>
+            <input class="form-control" asp-for="Author" />
+            <span class="text-danger" asp-validation-for="Author"></span>
+        </div>
+
+        <div class="mb-4">
+            <label class="mb-2" asp-for="Content"></label>
+            <textarea class="form-control" asp-for="Content"></textarea>
+            <span class="text-danger" asp-validation-for="Content"></span>
+        </div>
+
+        <div>
+            <label class="mb-2" asp-for="Tags"></label>
+            <input class="form-control" asp-for="Tags" />
+            <span class="text-danger" asp-validation-for="Tags"></span>
+        </div>
+
+        <div class="mt-4 mb-2">
+            <button type="submit" class="btn-primary">Opublikuj post</button>
+        </div>
+    </form>
+</div>

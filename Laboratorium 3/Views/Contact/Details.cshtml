@@ -1,0 +1,10 @@
+﻿@model Contact
+
+<h5>Imię: @Model.Name</h5>
+<h5>Email: @Model.Email</h5>
+<h5>Numer telefonu: @Model.Phone</h5>
+<h5 class="">Data urodzenia: @Model.Birth</h5>
+<h5 class="">Priorytet: @Model.Priority.GetDisplayName()</h5>
+<h5 class="">Czas utworzenia: @Model.Created</h5>
+
+<a class="btn btn-outline-primary" asp-action="Index">Powrót</a>

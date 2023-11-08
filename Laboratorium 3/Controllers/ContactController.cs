@@ -61,7 +61,7 @@ namespace Laboratorium_3.Controllers
         [HttpPost]
         public IActionResult Delete(Contact model)
         {
-            _contactService.Delete(model.Id);
+            _contactService.DeleteById(model.Id);
             return RedirectToAction("Index");
         }
 

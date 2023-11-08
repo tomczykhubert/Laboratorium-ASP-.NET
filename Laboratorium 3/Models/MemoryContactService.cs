@@ -20,7 +20,7 @@ public class MemoryContactService : IContactService
         return item.Id;
     }
 
-    public void Delete(int id)
+    public void DeleteById(int id)
     {
         _items.Remove(id);
     }

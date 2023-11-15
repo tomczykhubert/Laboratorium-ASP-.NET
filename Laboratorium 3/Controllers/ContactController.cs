@@ -28,28 +28,25 @@ namespace Laboratorium_3.Controllers
         {
             var gr = new SelectListGroup()
             {
-                Name: "Organizacje",
-            }
+                Name = "Organizacje",
+            };
             var group = new SelectListGroup()
             {
-                Name: "Brak",
-            }
+                Name = "Brak",
+            };
             return _contactService.FindAllOrganizations().Select(e => new SelectListItem()
             {
                 Text = e.Name,
                 Value = e.Id.ToString(),
                 Group = gr,
-            })
-            .Append(new SelectListItem()
+            }).Append(new SelectListItem()
                 {
                 Text = "Brak organizacji",
-                Value - "",
+                Value = "",
                 Selected = true,
-                Group = group,`
-
-            })
-            .ToList();
-    }
+                Group = group,
+            }).ToList();
+        }
         [HttpGet]
         public IActionResult Create()
         {
@@ -72,7 +69,10 @@ namespace Laboratorium_3.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            return View(_contactService.FindById(id));
+            var contact = _contactService.FindById(id);
+            if (contact != null)
+                contact.OrganizationList = CreateOrganizationItemList();
+            return View(contact);
         }
 
         [HttpPost]

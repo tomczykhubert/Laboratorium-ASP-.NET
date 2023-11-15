@@ -13,6 +13,7 @@ namespace Laboratorium_3.Models
                 Email = entity.Email,
                 Phone = entity.Phone,
                 Birth = entity.Birth,
+                OrganizationId = entity.OrganizationId,
             };
         }
 
@@ -25,6 +26,7 @@ namespace Laboratorium_3.Models
                 Email = model.Email,
                 Phone = model.Phone,
                 Birth = model.Birth,
+                OrganizationId = (int)model.OrganizationId,
             };
         }
     }

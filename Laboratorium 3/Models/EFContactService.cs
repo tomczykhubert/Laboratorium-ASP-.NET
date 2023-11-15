@@ -1,4 +1,5 @@
 ﻿using Data;
+using Data.Entities;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.AccessControl;
 
@@ -36,6 +37,11 @@ namespace Laboratorium_3.Models
                 .Contacts
                 .Select(e => ContactMapper.FromEntity(e))
                 .ToList();
+        }
+
+        public List<OrganizationEntity> FindAllOrganizations()
+        {
+            return _context.Organizations.ToList();
         }
 
         public Contact? FindById(int id)

@@ -1,4 +1,6 @@
-﻿using Laboratorium_3.Models;
+﻿using Data.Entities;
+using Laboratorium_3.Models;
+using Microsoft.EntityFrameworkCore;
 
 public class MemoryContactService : IContactService
 {
@@ -30,6 +32,11 @@ public class MemoryContactService : IContactService
         return _items.Values.ToList();
     }
 
+    public List<OrganizationEntity> FindAllOrganizations()
+    {
+        throw new NotImplementedException();
+    }
+
     public Contact? FindById(int id)
     {
         return _items[id];
@@ -40,4 +47,5 @@ public class MemoryContactService : IContactService
         item.Created = _items[item.Id].Created;
         _items[item.Id] = item;
     }
+
 }

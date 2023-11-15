@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Laboratorium_3.Models;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Data.Migrations;
+using System.Collections.Generic;
 
 namespace Laboratorium_3.Controllers
 {
@@ -18,10 +21,20 @@ namespace Laboratorium_3.Controllers
             return View(_contactService.FindAll());
         }
 
+        private List<SelectListItem> CreateOrganizationItemList()
+        {
+            return _contactService.FindAllOrganizations().Select(e => new SelectListItem()
+            {
+                Text = e.Name,
+                Value = e.Id.ToString(),
+            }).ToList();
+        }
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            Contact model = new Contact();
+            model.OrganizationList = CreateOrganizationItemList();
+            return View(model);
         }
 
         [HttpPost]

@@ -27,6 +27,10 @@
         <span class="text-danger" asp-validation-for="Birth"></span>
     </div>
 
+    <div class ="mb-3">
+        <select class="form-control" asp-for="OrganizationId" asp-items="@Model.OrganizationList"></select>
+    </div>
+
     <div class="mb-3">
         <label asp-for="Priority"></label>
         <select asp-for="Priority" asp-items="@Html.GetEnumSelectList<Priority>()"></select>

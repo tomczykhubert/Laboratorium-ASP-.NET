@@ -1,4 +1,7 @@
-﻿namespace Laboratorium_3.Models
+﻿using Data.Entities;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+
+namespace Laboratorium_3.Models
 {
     public interface IContactService
     {
@@ -7,5 +10,7 @@
         List<Contact> FindAll();
         void DeleteById(int id);
         void Update(Contact contact);
+        List<OrganizationEntity> FindAllOrganizations();
+
     }
 }

@@ -4,6 +4,9 @@ using System.Reflection;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Data.Migrations;
 using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
+using static System.Net.Mime.MediaTypeNames;
+using System.Text.RegularExpressions;
 
 namespace Laboratorium_3.Controllers
 {
@@ -23,12 +26,30 @@ namespace Laboratorium_3.Controllers
 
         private List<SelectListItem> CreateOrganizationItemList()
         {
+            var gr = new SelectListGroup()
+            {
+                Name: "Organizacje",
+            }
+            var group = new SelectListGroup()
+            {
+                Name: "Brak",
+            }
             return _contactService.FindAllOrganizations().Select(e => new SelectListItem()
             {
                 Text = e.Name,
                 Value = e.Id.ToString(),
-            }).ToList();
-        }
+                Group = gr,
+            })
+            .Append(new SelectListItem()
+                {
+                Text = "Brak organizacji",
+                Value - "",
+                Selected = true,
+                Group = group,`
+
+            })
+            .ToList();
+    }
         [HttpGet]
         public IActionResult Create()
         {

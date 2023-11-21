@@ -26,7 +26,7 @@ namespace Laboratorium_3.Models
                 Email = model.Email,
                 Phone = model.Phone,
                 Birth = model.Birth,
-                OrganizationId = (int)model.OrganizationId,
+                OrganizationId = model.OrganizationId,
             };
         }
     }

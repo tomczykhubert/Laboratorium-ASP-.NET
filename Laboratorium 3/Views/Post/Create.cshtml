@@ -16,10 +16,10 @@
             <span class="text-danger" asp-validation-for="Content"></span>
         </div>
 
-        <div>
-            <label class="mb-2" asp-for="Tags"></label>
-            <input class="form-control" asp-for="Tags" />
-            <span class="text-danger" asp-validation-for="Tags"></span>
+        <div class="mb-3">
+                <label asp-for="Tags"></label>
+                <select asp-for="Tags" asp-items="@Html.GetEnumSelectList<Tags>()"></select>
+                <span class="text-danger" asp-validation-for="Tags"></span>
         </div>
 
         <div class="mt-4 mb-2">

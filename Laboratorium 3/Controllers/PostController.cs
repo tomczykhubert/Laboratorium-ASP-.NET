@@ -8,10 +8,12 @@ namespace Laboratorium_3.Controllers
     public class PostController : Controller
     {
         private readonly IPostService _postService;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public PostController(IPostService postService)
+        public PostController(IPostService postService, IDateTimeProvider dateTimeProvider)
         {
             _postService = postService;
+            _dateTimeProvider = dateTimeProvider;
         }
         public IActionResult Index()
         {
@@ -26,6 +28,8 @@ namespace Laboratorium_3.Controllers
         [HttpPost]
         public IActionResult Create(Post model)
         {
+            model.Comments = new List<Comment>();
+            model.PublicationDate = _dateTimeProvider.dateNow();
             if (ModelState.IsValid)
             {
                 _postService.Add(model);
@@ -72,12 +76,16 @@ namespace Laboratorium_3.Controllers
         }
 
         [HttpPost]
-        public IActionResult Details(IFormCollection collection, Post model)
+        public IActionResult Details(int postId, string author, string comment)
         {
-            string comment = collection["Comment"].ToString();
-            Console.WriteLine(comment);
-            _postService.AddComment(model, comment);
-
+            Post model = _postService.FindById(postId);
+            if (model is null)
+            {
+                return Redirect(Request.Headers["Referer"].ToString());
+            }
+            model.Comments.Add(new Comment(){CommentId = model.Comments.Count + 1, Author = author, Content = comment, PublicationDate = _dateTimeProvider.dateNow()});
+            if (ModelState.IsValid)
+                _postService.Update(model);
             return View(_postService.FindById(model.Id));
         }
     }

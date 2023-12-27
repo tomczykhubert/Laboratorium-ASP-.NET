@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Labolatorium3___App.Models;
 using Laboratorium_3.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,9 +38,14 @@ public class MemoryContactService : IContactService
         throw new NotImplementedException();
     }
 
+    public PagingList<Contact> FindPage(int page, int size)
+    {
+        throw new NotImplementedException();
+    }
+
     public Contact? FindById(int id)
     {
-        return _items[id];
+        return _items.ContainsKey(id) ? _items[id] : null;
     }
 
     public void Update(Contact item)

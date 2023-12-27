@@ -2,8 +2,10 @@
 using Data.Entities;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.AccessControl;
+using Labolatorium3___App.Models;
 
 namespace Laboratorium_3.Models
+
 {
     public class EFContactService : IContactService
     {
@@ -24,7 +26,7 @@ namespace Laboratorium_3.Models
         public void DeleteById(int id)
         {
             var find = _context.Contacts.Find(id);
-            if (find is not null )
+            if (find is not null)
             {
                 _context.Contacts.Remove(find);
                 _context.SaveChanges();
@@ -44,10 +46,22 @@ namespace Laboratorium_3.Models
             return _context.Organizations.ToList();
         }
 
+        public PagingList<Contact> FindPage(int page, int size)
+        {
+            return PagingList<Contact>.Create(
+                (p, s) => _context.Contacts
+                    .OrderBy(c => c.Name)
+                    .Skip((p - 1) * s)
+                    .Take(s)
+                    .Select(ContactMapper.FromEntity)
+                    .ToList()
+                ,page, size, _context.Contacts.Count()
+            );
+        }
         public Contact? FindById(int id)
         {
             var find = _context.Contacts.Find(id);
-            return find is null? null: ContactMapper.FromEntity(find);
+            return find is null ? null : ContactMapper.FromEntity(find);
         }
 
         public void Update(Contact model)

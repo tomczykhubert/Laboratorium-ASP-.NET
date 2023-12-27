@@ -26,7 +26,9 @@
             </p>
             <p class="mb-3">
                 @Html.DisplayNameFor(i => Model[0].Content): @item.Content
-
+            </p>
+            <p class="mb-3">
+                Liczba komentarzy: @item.Comments.Count
             </p>
             <a class="btn btn-secondary rounded" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id">Edytuj</a>
             <a class="btn btn-dark rounded" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>

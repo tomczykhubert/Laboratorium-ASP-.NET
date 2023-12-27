@@ -3,6 +3,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Laboratorium_3.Models
 {
+    public enum Tags
+    {
+        [Display(Name="Polityka")]
+        Politics,
+        [Display(Name = "Sport")]
+        Sport,
+        [Display(Name = "Nauka")]
+        Science,
+        [Display(Name = "Motoryzacja")]
+        Automotive,
+        [Display(Name = "Gry")]
+        Games
+    }
     public class Post
     {
         [HiddenInput]
@@ -19,17 +32,15 @@ namespace Laboratorium_3.Models
         public required string Author { get; set; }
 
         [HiddenInput]
+        [Required]
         [Display(Name = "Data publikacji")]
-        public DateTime PublicationDate { get; set; }
-
-        [MaxLength(length: 15, ErrorMessage = "Za długa nazwa tagu")]
+        public required DateTime PublicationDate { get; set; }
+        
+        [Required]
         [Display(Name = "Tagi")]
-        public string? Tags { get; set; }
+        public required Tags Tags { get; set; }
+        
         [Display(Name = "Komentarze")]
-        public List<string>? Comments { get; set; }
-        public Post()
-        {
-            Comments = new List<string>();
-        }
+        public List<Comment>? Comments { get; set; }
     }
 }

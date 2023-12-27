@@ -30,6 +30,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\Contact\" />
-    <Folder Include="Models\Post\" />
   </ItemGroup>
 </Project>

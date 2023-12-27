@@ -7,6 +7,5 @@
         List<Post> FindAll();
         void Delete(int id);
         void Update(Post post);
-        void AddComment(Post post, string comment);
     }
 }

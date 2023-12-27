@@ -41,9 +41,5 @@
             item.Comments = _items[item.Id].Comments;
             _items[item.Id] = item;
         }
-        public void AddComment(Post item, string comment)
-        {
-            _items[item.Id].Comments.Add(comment);
-        }
     }
 }

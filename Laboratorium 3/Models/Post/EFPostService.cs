@@ -47,7 +47,7 @@ namespace Laboratorium_3.Models
 
         public List<Post> FindByTag(int tagId)
         {
-            return _context.Posts.Where(o => o.TagId == tagId).Select(o => PostMapper.FromEntity(o)).ToList();
+            return _context.Posts.Include(p => p.Tag).Where(o => o.TagId == tagId).Select(o => PostMapper.FromEntity(o)).ToList();
         }
 
         public void Update(Post model)

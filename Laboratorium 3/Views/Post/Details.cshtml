@@ -1,10 +1,15 @@
 ﻿@model Post
-
-<div style="padding: 20px; background-color: rgb(120, 180, 240);
-               border-radius: 10px; box-shadow: 0 0 10px rgb(100, 170, 200);
+<h2 class="ms-4">
+    Szczegóły posta
+</h2>
+<div style="padding: 15px; background-color: rgb(51, 51, 51);
+               border-radius: 10px; box-shadow: 0 0 10px rgb(51, 51, 51);
                color: white;"
-     class="mb-3">
-    <div class="bg-light rounded text-black p-2 mb-3">
+     class="m-4">
+    <p>
+        Post:
+    </p>
+    <div class="rounded p-2 mb-3" style="box-shadow: 0 0 10px rgb(80, 80, 80); background-color: rgb(99, 99, 99)">
         <p class="mb-3">
             Autor: @Model.Author
         </p>
@@ -19,34 +24,33 @@
         </p>
         <p class="mb-1">Liczba komentarzy: <span id="commentCount"></span></p>
     </div>
-
-
-    <p class="mb-3">
+    <p>
         Dodaj komentarz:
     </p>
+    <div class="rounded p-2 mb-3" style="box-shadow: 0 0 10px rgb(80, 80, 80); background-color: rgb(99, 99, 99)">
+        <form class="mb-3" asp-controller="Post" asp-action="AddComment" method="post">
+            <input type="hidden" name="postId" value="@Model.Id" />
 
-    <form class="mb-3" asp-controller="Post" asp-action="AddComment" method="post">
-        <input type="hidden" name="postId" value="@Model.Id"/>
+            <label for="author" class="mb-3">Autor:</label>
+            <input required class="form-control mb-3" id="author" name="author" />
+            <span class="text-danger"></span>
 
-        
-        <label for="author" class="mb-3">Autor:</label>
-        <input required class="form-control mb-3" id="author" name="author"/>
-        <span class="text-danger"></span>
-        
-        <label for="content" class="mb-3">Komentarz:</label>
-        <input required class="form-control mb-3" id="content" name="content" />
-        <span class="text-danger"></span>
-        
-        <button type="submit" class="btn btn-secondary">
-            Dodaj komentarz
-        </button>
-    </form>
+            <label for="content" class="mb-3">Komentarz:</label>
+            <input required class="form-control mb-3" id="content" name="content" />
+            <span class="text-danger"></span>
+
+            <button type="submit" class="btn btn-primary">
+                Dodaj komentarz
+            </button>
+        </form>
+    </div>
+
     
     <p class="mb-3">Komentarze:</p>
     <div id="comments">
 
     </div>
-    <a class="mt-1 btn btn-secondary" asp-action="Index">Powrót</a>
+    <a class="mt-1 btn btn-primary" asp-action="Index">Powrót</a>
 </div>
 
 @section Scripts{
@@ -68,7 +72,8 @@
                     for (let item of json) {
                         let comment = document.createElement('div');
                         comment.setAttribute('value', item.id);
-                        comment.setAttribute('class', "bg-light text-dark p-1 mb-3 rounded")
+                        comment.setAttribute('class', "p-2 mb-3 rounded")
+                        comment.setAttribute('style', "background-color: rgb(99, 99, 99); box-shadow: 0 0 10px rgb(80, 80, 80);")
                         let author = document.createElement('div');
                         author.innerText = "Autor: " + item.author;
                         author.setAttribute('class', "m-1");
@@ -84,7 +89,7 @@
                         deleteForm.setAttribute('class', "m-1");
                         let deleteButton = document.createElement('button');
                         deleteButton.setAttribute('type', "submit");
-                        deleteButton.setAttribute('class', "btn btn-secondary");
+                        deleteButton.setAttribute('class', "btn btn-danger");
                         deleteButton.innerText = "Usuń komentarz";
                         let idInput = document.createElement('input');
                         idInput.setAttribute('type', "hidden");

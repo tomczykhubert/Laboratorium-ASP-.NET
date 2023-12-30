@@ -17,10 +17,14 @@ namespace Laboratorium_3.Controllers
             _postService = postService;
             _dateTimeProvider = dateTimeProvider;
         }
+
         [AllowAnonymous]
-        public IActionResult Index()
+        public IActionResult Index(int tagId)
         {
-            return View(_postService.FindAll());
+            if (tagId == 0)
+                return View(_postService.FindAll());
+            else
+                return View(_postService.FindByTag(tagId));
         }
         [Authorize]
         [HttpGet]
@@ -28,6 +32,7 @@ namespace Laboratorium_3.Controllers
         {
             return View();
         }
+
         [Authorize]
         [HttpPost]
         public IActionResult Create(Post model)
@@ -40,6 +45,7 @@ namespace Laboratorium_3.Controllers
             }
             return View();
         }
+
         [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult Delete(int id) 
@@ -47,6 +53,7 @@ namespace Laboratorium_3.Controllers
             return View(_postService.FindById(id));
 
         }
+
         [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult Delete(Post model)
@@ -54,12 +61,14 @@ namespace Laboratorium_3.Controllers
             _postService.Delete(model.Id);
             return RedirectToAction("Index");
         }
+
         [Authorize(Roles = "admin")]
         [HttpGet]
         public IActionResult Update (int id)
         {
             return View(_postService.FindById(id));
         }
+
         [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult Update(Post model)
@@ -71,12 +80,14 @@ namespace Laboratorium_3.Controllers
             }
             return View();
         }
-        [AllowAnonymous]
+
+        [Authorize]
         [HttpGet]
         public IActionResult Details(int id)
         {
             return View(_postService.FindById(id));
         }
+
         [Authorize]
         [HttpPost]
         public IActionResult AddComment(int postId, string author, string content)
@@ -85,6 +96,7 @@ namespace Laboratorium_3.Controllers
             _postService.AddComment(comment);
             return Redirect(Request.Headers["Referer"]);
         }
+
         [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult DeleteComment(int commentId)

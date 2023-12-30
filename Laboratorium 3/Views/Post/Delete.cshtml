@@ -1,26 +1,29 @@
 ﻿@model Post
 
-<h2 class="mb-4">
-    Czy na pewno chcesz usunąć post
-</h2>
+<h3 class="mb-4">
+    Czy na pewno chcesz usunąć post?
+</h3>
 
-<div style="background-color: rgb(120, 180, 240);
-               border-radius: 10px; box-shadow: 0 0 10px rgb(100, 170, 200);
+<div style="background-color: rgb(51, 51, 51);
+               border-radius: 10px; box-shadow: 0 0 10px rgb(51, 51, 51);
                color: white;
                 " class="p-2">
-    <div class="m-1">
-        Autor: @Model.Author
+    <div class="rounded p-2 mb-3" style=" box-shadow: 0 0 10px rgb(80, 80, 80); background-color: rgb(99, 99, 99)">
+        <div class="m-2">
+            Autor: @Model.Author
+        </div>
+        <div class="m-2">
+            Data publikacji: @Model.PublicationDate
+        </div>
+        <div class="m-2">
+            Treść posta: @Model.Content
+        </div>
     </div>
-    <div class="m-1">
-        Data publikacji: @Model.PublicationDate
-    </div>
-    <div class="m-1">
-        Treść posta: @Model.Content
-    </div>
+
+    <form class="mt-4" asp-controller="Post" asp-action="Delete">
+        <input asp-for="Id" />
+        <button class="btn btn-danger" type="submit">Tak</button>
+        <a class="btn btn-primary" asp-action="Index">Nie</a>
+    </form>
 </div>
 
-<form class="mt-4" asp-controller="Post" asp-action="Delete">
-    <input asp-for="Id"/>
-    <button class="btn btn-danger" type="submit">Tak</button>
-    <a class="btn btn-outline-primary" asp-action="Index">Nie</a>
-</form>

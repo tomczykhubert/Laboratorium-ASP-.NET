@@ -1,22 +1,26 @@
 ﻿@model List<Post>
 
-<h1>
+<h1 class="mb-3">
     Posty
 </h1>
 
-<a class="btn btn-primary mb-5 rounded" asp-controller="Post" asp-action="Create">
-    Dodaj post
-</a>
-<div>Filtruj posty:</div>
-<div id="tags">
 
+<div class="d-flex mb-4">
+    <a class="btn btn-primary rounded me-2" asp-controller="Post" asp-action="Create">
+        Dodaj post
+    </a>
+    <form asp-controller="Post" asp-action="Index">
+        <select id="filter" name="tagId" class="rounded" style="height: 38px; background-color: rgb(51, 51, 51); color: white;" onchange="this.form.submit()">
+        </select>
+    </form>
 </div>
+
 @if (Model.Count > 0)
 {
     foreach (var item in @Model)
     {
-        <div style="background-color: rgb(120, 180, 240);
-               border-radius: 10px; box-shadow: 0 0 10px rgb(100, 170, 200);
+        <div style="background-color: rgb(51, 51, 51);
+               border-radius: 10px; box-shadow: 0 0 10px rgb(51, 51, 51);
                color: white;"
              class="p-3 mb-5">
             <p class="mb-3">
@@ -32,16 +36,17 @@
             <p class="mb-3">
                 @Html.DisplayNameFor(i => Model[0].Tag): @item.Tag.TagName
             </p>
-            <a class="btn btn-secondary rounded" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id">Edytuj</a>
+            <a class="btn btn-primary rounded" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id">Edytuj</a>
             <a class="btn btn-dark rounded" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
-            <a class="btn btn-warning rounded" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+            <a class="btn btn-danger rounded" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
         </div>
     }
 }
+
 @section Scripts{
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const tags = document.getElementById("tags");
+            let select = document.getElementById("filter");
             fetch(`/api/tags`)
                 .then(response => {
                     if (response.ok) {
@@ -50,26 +55,26 @@
                     throw "no ok, status " + response.status;
                 })
                 .then(json => {
-                    tags.innerHTML = '';
+                    select.innerHTML = '';
+                    let label = document.createElement('option');
+                    label.innerText = "Wybierz filtr";
+                    select.appendChild(label);
+                    let all = document.createElement('option');
+                    all.setAttribute('value', 0);
+                    all.innerText = "Wszyskie";
+                    all.selected = true;
+                    select.appendChild(all);
                     for (let item of json) {
-                        let tag = document.createElement('input')
-                        tag.setAttribute('type', "radio");
-                        tag.setAttribute('name', "tag" + item.id);
-                        tag.setAttribute('id', "tag" + item.id);
-                        tag.setAttribute('value', item.id);
-                        tag.setAttribute('style', "display: none")
-                        let tagLabel = document.createElement('label');
-                        tagLabel.setAttribute('class', "btn btn-secondary m-2 ms-0");
-                        tagLabel.innerText = item.tagName;
-                        tagLabel.setAttribute('for', "tag" + item.id);
-                        tags.appendChild(tagLabel);
-                        tags.appendChild(tag);
-
+                        let option = document.createElement('option');
+                        option.setAttribute('value', item.id);
+                        option.innerText = item.tagName;
+                        option.setAttribute('id', "option" + item.id)
+                        select.appendChild(option);
                     }
                 })
                 .catch(e => {
                     console.log('cant get data from api', e);
                 });
-        })
+        });
     </script>
-    }
+}

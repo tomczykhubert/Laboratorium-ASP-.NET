@@ -47,6 +47,11 @@ namespace Laboratorium_3.Models
             return _items[id];
         }
 
+        public List<Post> FindByTag(int tagId)
+        {
+            throw new NotImplementedException();
+        }
+
         public int GetCommentId()
         {
             throw new NotImplementedException();

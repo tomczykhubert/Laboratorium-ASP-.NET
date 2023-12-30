@@ -1,6 +1,5 @@
 ﻿@model List<Post>
 
-
 <h1>
     Posty
 </h1>
@@ -8,27 +7,30 @@
 <a class="btn btn-primary mb-5 rounded" asp-controller="Post" asp-action="Create">
     Dodaj post
 </a>
+<div>Filtruj posty:</div>
+<div id="tags">
+
+</div>
 @if (Model.Count > 0)
 {
     foreach (var item in @Model)
     {
-        <div style="padding: 20px; background-color: rgb(120, 180, 240);
-               border-radius: 25px; box-shadow: 0 0 15px rgb(100, 170, 200);
+        <div style="background-color: rgb(120, 180, 240);
+               border-radius: 10px; box-shadow: 0 0 10px rgb(100, 170, 200);
                color: white;"
-             class="mb-3">
+             class="p-3 mb-5">
             <p class="mb-3">
                 @Html.DisplayNameFor(i => Model[0].Author): @item.Author
 
             </p>
             <p class="mb-3">
-                @Html.DisplayNameFor(i => Model[0].PublicationDate): @item.PublicationDate
-
+                @Html.DisplayNameFor(i => Model[0].PublicationDate): @item.PublicationDate.ToString("yyyy-MM-dd")
             </p>
             <p class="mb-3">
                 @Html.DisplayNameFor(i => Model[0].Content): @item.Content
             </p>
             <p class="mb-3">
-                Liczba komentarzy: @item.Comments.Count
+                @Html.DisplayNameFor(i => Model[0].Tag): @item.Tag.TagName
             </p>
             <a class="btn btn-secondary rounded" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id">Edytuj</a>
             <a class="btn btn-dark rounded" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
@@ -36,3 +38,38 @@
         </div>
     }
 }
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const tags = document.getElementById("tags");
+            fetch(`/api/tags`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw "no ok, status " + response.status;
+                })
+                .then(json => {
+                    tags.innerHTML = '';
+                    for (let item of json) {
+                        let tag = document.createElement('input')
+                        tag.setAttribute('type', "radio");
+                        tag.setAttribute('name', "tag" + item.id);
+                        tag.setAttribute('id', "tag" + item.id);
+                        tag.setAttribute('value', item.id);
+                        tag.setAttribute('style', "display: none")
+                        let tagLabel = document.createElement('label');
+                        tagLabel.setAttribute('class', "btn btn-secondary m-2 ms-0");
+                        tagLabel.innerText = item.tagName;
+                        tagLabel.setAttribute('for', "tag" + item.id);
+                        tags.appendChild(tagLabel);
+                        tags.appendChild(tag);
+
+                    }
+                })
+                .catch(e => {
+                    console.log('cant get data from api', e);
+                });
+        })
+    </script>
+    }

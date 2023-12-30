@@ -1,50 +1,109 @@
 ﻿@model Post
 
 <div style="padding: 20px; background-color: rgb(120, 180, 240);
-               border-radius: 25px; box-shadow: 0 0 15px rgb(100, 170, 200);
+               border-radius: 10px; box-shadow: 0 0 10px rgb(100, 170, 200);
                color: white;"
      class="mb-3">
+    <div class="bg-light rounded text-black p-2 mb-3">
+        <p class="mb-3">
+            Autor: @Model.Author
+        </p>
+        <p class="mb-3">
+            Data publikacji: @Model.PublicationDate.ToString("yyyy-MM-dd")
+        </p>
+        <p class="mb-3">
+            Treść posta: @Model.Content
+        </p>
+        <p>
+            Tag: @Model.Tag.TagName
+        </p>
+        <p class="mb-1">Liczba komentarzy: <span id="commentCount"></span></p>
+    </div>
+
+
     <p class="mb-3">
-        Autor: @Model.Author
-    </p>
-    <p class="mb-3">
-        Data publikacji: @Model.PublicationDate
-    </p>
-    <p class="mb-3">
-        Treść posta: @Model.Content
-    </p>
-    <p>
-        Tagi: @Model.Tags
+        Dodaj komentarz:
     </p>
 
-    <p>Liczba komentarzy: @Model.Comments.Count</p>
-
-    <form class="mb-3" asp-controller="Post" asp-action="Details" method="post">
+    <form class="mb-3" asp-controller="Post" asp-action="AddComment" method="post">
         <input type="hidden" name="postId" value="@Model.Id"/>
-        <label class="mb-3">
+
+        
+        <label for="author" class="mb-3">Autor:</label>
+        <input required class="form-control mb-3" id="author" name="author"/>
+        <span class="text-danger"></span>
+        
+        <label for="content" class="mb-3">Komentarz:</label>
+        <input required class="form-control mb-3" id="content" name="content" />
+        <span class="text-danger"></span>
+        
+        <button type="submit" class="btn btn-secondary">
             Dodaj komentarz
-        </label>
-        
-        <label for="author" class="mb-3">Autor</label>
-        <input class="form-control mb-3" id="author" name="author"/>
-        <span class="text-danger"></span>
-        
-        <label for="comment" class="mb-3">Komentarz</label>
-        <input class="form-control mb-3" id="comment" name="comment"/>
-        <span class="text-danger"></span>
-        
-        <button type="submit" class="btn btn-secondary rounded">
-            Potwierdź
         </button>
     </form>
     
     <p class="mb-3">Komentarze:</p>
-    @foreach (var item in Model.Comments)
-    {
-        <p class="mb-2">Autor: @item.Author</p>
-        <p class="mb-2">Treść: @item.Content</p>
-        <p class="mb-4">Data publikacji: @item.PublicationDate</p>
-    }
+    <div id="comments">
+
+    </div>
+    <a class="mt-1 btn btn-secondary" asp-action="Index">Powrót</a>
 </div>
 
-<a class="mt-4 btn btn-secondary" asp-action="Index">Powrót</a>
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const comments = document.getElementById("comments");
+            let commentCount = document.getElementById("commentCount");
+            fetch(`/api/comments/${@Model.Id}`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw "no ok, status " + response.status;
+                })
+                .then(json => {
+                    let counter = 0;
+                    commentCount.innerHTML = '';
+                    comments.innerHTML = '';
+                    for (let item of json) {
+                        let comment = document.createElement('div');
+                        comment.setAttribute('value', item.id);
+                        comment.setAttribute('class', "bg-light text-dark p-1 mb-3 rounded")
+                        let author = document.createElement('div');
+                        author.innerText = "Autor: " + item.author;
+                        author.setAttribute('class', "m-1");
+                        let content = document.createElement('div');
+                        content.innerText = "Treść komentarza: " + item.content;
+                        content.setAttribute('class', "m-1");
+                        let publicationDate = document.createElement('div');
+                        publicationDate.innerText = "Data publikacji: " + new Date(item.publicationDate).toISOString().slice(0, 10);
+                        publicationDate.setAttribute('class', "m-1");
+                        let deleteForm = document.createElement('form');
+                        deleteForm.setAttribute('action', "/Post/DeleteComment");
+                        deleteForm.setAttribute('method', "post");
+                        deleteForm.setAttribute('class', "m-1");
+                        let deleteButton = document.createElement('button');
+                        deleteButton.setAttribute('type', "submit");
+                        deleteButton.setAttribute('class', "btn btn-secondary");
+                        deleteButton.innerText = "Usuń komentarz";
+                        let idInput = document.createElement('input');
+                        idInput.setAttribute('type', "hidden");
+                        idInput.setAttribute('name', 'commentId');
+                        idInput.setAttribute('value', item.id);
+                        deleteForm.appendChild(idInput);
+                        deleteForm.appendChild(deleteButton);
+                        comment.appendChild(author);
+                        comment.appendChild(publicationDate);
+                        comment.appendChild(content);
+                        comment.appendChild(deleteForm);
+                        comments.appendChild(comment);
+                        counter++;
+                    }
+                    commentCount.innerText = counter;
+                })
+                .catch(e => {
+                    console.log('cant get data from api', e);
+                })
+        });
+    </script>
+}

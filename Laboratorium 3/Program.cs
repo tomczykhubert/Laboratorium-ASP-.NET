@@ -20,7 +20,7 @@ namespace Laboratorium_3
             builder.Services.AddControllersWithViews();
             builder.Services.AddTransient<IContactService, EFContactService>();
             builder.Services.AddSingleton<IDateTimeProvider, CurrentDateTimeProvider>();
-            builder.Services.AddSingleton<IPostService, MemoryPostService>();
+            builder.Services.AddTransient<IPostService, EFPostService>();
             builder.Services.AddDbContext<AppDbContext>();
 
             var app = builder.Build();

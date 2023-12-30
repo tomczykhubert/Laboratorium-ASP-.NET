@@ -20,5 +20,5 @@ public class CommentEntity
 
     [Required] public int PostId { get; set; }
 
-    [Required] public PostEntity Post { get; set; }
+    [Required] public PostEntity? Post { get; set; }
 }

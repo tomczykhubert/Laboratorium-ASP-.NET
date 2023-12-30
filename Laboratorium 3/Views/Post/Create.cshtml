@@ -17,13 +17,40 @@
         </div>
 
         <div class="mb-3">
-                <label asp-for="Tags"></label>
-                <select asp-for="Tags" asp-items="@Html.GetEnumSelectList<Tags>()"></select>
-                <span class="text-danger" asp-validation-for="Tags"></span>
+            <label class="mb-2" asp-for="TagId">Tag</label>
+            <select class="form-control" asp-for="TagId"></select>
         </div>
 
         <div class="mt-4 mb-2">
-            <button type="submit" class="btn-primary">Opublikuj post</button>
+            <button type="submit" class="btn btn-primary">Opublikuj post</button>
+            <a class="btn btn-secondary" asp-action="Index">Powrót</a>
         </div>
     </form>
 </div>
+
+@section Scripts{
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const select = document.getElementById("TagId");
+            fetch(`/api/tags`)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json()
+                    }
+                    throw "no ok, status " + response.status;
+                })
+                .then(json => {
+                    select.innerHTML = '';
+                    for (let item of json) {
+                        let option = document.createElement('option');
+                        option.setAttribute('value', item.id);
+                        option.innerText = item.tagName;
+                        select.appendChild(option);
+                    }
+                })
+                .catch(e => {
+                    console.log('cant get data from api', e);
+                });
+        })
+    </script>
+}

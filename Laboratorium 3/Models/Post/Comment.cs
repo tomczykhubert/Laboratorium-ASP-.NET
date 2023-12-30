@@ -17,4 +17,5 @@ public class Comment
     [HiddenInput]
     [Display(Name = "Data publikacji")]
     public required DateTime PublicationDate { get; set; }
+    public int PostId { get; set; }
 }

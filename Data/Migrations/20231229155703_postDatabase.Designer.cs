@@ -3,6 +3,7 @@ using System;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231229155703_postDatabase")]
+    partial class postDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.13");
@@ -52,7 +55,7 @@ namespace Data.Migrations
                             Author = "Karolina",
                             Content = "Już nie mogę się doczekać!",
                             PostId = 1,
-                            PublicationDate = new DateTime(2023, 12, 30, 10, 45, 49, 347, DateTimeKind.Local).AddTicks(9465)
+                            PublicationDate = new DateTime(2023, 12, 29, 16, 57, 3, 807, DateTimeKind.Local).AddTicks(5608)
                         },
                         new
                         {
@@ -60,7 +63,7 @@ namespace Data.Migrations
                             Author = "Milena",
                             Content = "Słabo im szło w tym sezonie.",
                             PostId = 2,
-                            PublicationDate = new DateTime(2023, 12, 30, 10, 45, 49, 347, DateTimeKind.Local).AddTicks(9491)
+                            PublicationDate = new DateTime(2023, 12, 29, 16, 57, 3, 807, DateTimeKind.Local).AddTicks(5640)
                         },
                         new
                         {
@@ -68,7 +71,7 @@ namespace Data.Migrations
                             Author = "Andrzej",
                             Content = "Tak, doszło do trzykrotnego zwiększenia jej wielkości.",
                             PostId = 3,
-                            PublicationDate = new DateTime(2023, 12, 30, 10, 45, 49, 347, DateTimeKind.Local).AddTicks(9493)
+                            PublicationDate = new DateTime(2023, 12, 29, 16, 57, 3, 807, DateTimeKind.Local).AddTicks(5641)
                         },
                         new
                         {
@@ -76,7 +79,7 @@ namespace Data.Migrations
                             Author = "Karol",
                             Content = "Oczywiście, że Toyota!",
                             PostId = 4,
-                            PublicationDate = new DateTime(2023, 12, 30, 10, 45, 49, 347, DateTimeKind.Local).AddTicks(9495)
+                            PublicationDate = new DateTime(2023, 12, 29, 16, 57, 3, 807, DateTimeKind.Local).AddTicks(5643)
                         },
                         new
                         {
@@ -84,7 +87,7 @@ namespace Data.Migrations
                             Author = "Sam",
                             Content = "Najgorsze jest to, że na premierę na PC poczekamy pewnie do 2027.",
                             PostId = 5,
-                            PublicationDate = new DateTime(2023, 12, 30, 10, 45, 49, 347, DateTimeKind.Local).AddTicks(9496)
+                            PublicationDate = new DateTime(2023, 12, 29, 16, 57, 3, 807, DateTimeKind.Local).AddTicks(5644)
                         });
                 });
 
@@ -244,8 +247,8 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3db9f325-4efa-4a73-b983-5ca4cfea6010",
-                            ConcurrencyStamp = "3db9f325-4efa-4a73-b983-5ca4cfea6010",
+                            Id = "441c4ab7-b51c-4b95-90f5-c1aa0006da32",
+                            ConcurrencyStamp = "441c4ab7-b51c-4b95-90f5-c1aa0006da32",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         });
@@ -340,35 +343,19 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3ef29327-691e-4399-84e4-a02d0ef14c85",
+                            Id = "b01748ff-c1f0-437a-a0c5-4b3eaa521908",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "850dc636-f13e-4f9c-8847-30435c37beed",
+                            ConcurrencyStamp = "2bd780e2-ade4-4860-9cf2-52962dc64be4",
                             Email = "adam@wsei.edu.pl",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADAM@WSEI.EDU.PL",
                             NormalizedUserName = "ADAM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPUO1lXPommlqnte1tEHGulCclY7hmf9Y4ygHQ9M2DMGJrOyjqAycN7/yFXoIi6m1g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJSSWfsXq8sH0AndN5ha5qV8azcbpkO4nTN5kVtwxb4wGeXfCdOLyHuscyxb5MCS4w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "83494dad-b1e8-4244-ae5e-add918dc3568",
+                            SecurityStamp = "28f8d69e-d3a8-458a-bad6-60eafc016fe5",
                             TwoFactorEnabled = false,
                             UserName = "adam"
-                        },
-                        new
-                        {
-                            Id = "15bd235a-47e6-4581-8ed5-eda87cf350e5",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "5fc8cfc8-7597-45b3-a832-5307c8c02859",
-                            Email = "hubert@wsei.edu.pl",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "HUBERT@WSEI.EDU.PL",
-                            NormalizedUserName = "HUBERT",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOtXM2dyXd4AAgnH55ZB9Zshg9bjgnc6sp+oiYfsLbPhPl7Q5wLMU9dciepDlsja1Q==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "3ce0e559-7fe2-4049-b352-06c87c9d7a7f",
-                            TwoFactorEnabled = false,
-                            UserName = "Hubert"
                         });
                 });
 
@@ -434,8 +421,8 @@ namespace Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "3ef29327-691e-4399-84e4-a02d0ef14c85",
-                            RoleId = "3db9f325-4efa-4a73-b983-5ca4cfea6010"
+                            UserId = "b01748ff-c1f0-437a-a0c5-4b3eaa521908",
+                            RoleId = "441c4ab7-b51c-4b95-90f5-c1aa0006da32"
                         });
                 });
 
@@ -492,7 +479,7 @@ namespace Data.Migrations
                             PostId = 1,
                             Author = "Janek",
                             Content = "W 2025 wybory na prezydenta!",
-                            PublicationDate = new DateTime(2023, 12, 30, 10, 45, 49, 347, DateTimeKind.Local).AddTicks(9512),
+                            PublicationDate = new DateTime(2023, 12, 29, 16, 57, 3, 807, DateTimeKind.Local).AddTicks(5681),
                             TagId = 1
                         },
                         new
@@ -500,7 +487,7 @@ namespace Data.Migrations
                             PostId = 2,
                             Author = "Grzegorz",
                             Content = "Real Madryt odpadł z ligi mistrzów.",
-                            PublicationDate = new DateTime(2023, 12, 30, 10, 45, 49, 347, DateTimeKind.Local).AddTicks(9514),
+                            PublicationDate = new DateTime(2023, 12, 29, 16, 57, 3, 807, DateTimeKind.Local).AddTicks(5683),
                             TagId = 2
                         },
                         new
@@ -508,7 +495,7 @@ namespace Data.Migrations
                             PostId = 3,
                             Author = "Ania",
                             Content = "Wiatr słoneczny zniekształcił atmosfere marsa!",
-                            PublicationDate = new DateTime(2023, 12, 30, 10, 45, 49, 347, DateTimeKind.Local).AddTicks(9515),
+                            PublicationDate = new DateTime(2023, 12, 29, 16, 57, 3, 807, DateTimeKind.Local).AddTicks(5685),
                             TagId = 3
                         },
                         new
@@ -516,7 +503,7 @@ namespace Data.Migrations
                             PostId = 4,
                             Author = "Kasia",
                             Content = "Toyota Supra vs Nissan Skyline R34?",
-                            PublicationDate = new DateTime(2023, 12, 30, 10, 45, 49, 347, DateTimeKind.Local).AddTicks(9517),
+                            PublicationDate = new DateTime(2023, 12, 29, 16, 57, 3, 807, DateTimeKind.Local).AddTicks(5686),
                             TagId = 4
                         },
                         new
@@ -524,7 +511,7 @@ namespace Data.Migrations
                             PostId = 5,
                             Author = "Alex",
                             Content = "Nie mogę się doczekać premiery GTA VI!",
-                            PublicationDate = new DateTime(2023, 12, 30, 10, 45, 49, 347, DateTimeKind.Local).AddTicks(9518),
+                            PublicationDate = new DateTime(2023, 12, 29, 16, 57, 3, 807, DateTimeKind.Local).AddTicks(5688),
                             TagId = 5
                         });
                 });

@@ -4,24 +4,23 @@
     Czy na pewno chcesz usunąć post
 </h2>
 
-<div style="padding: 20px; background-color: rgb(120, 180, 240);
-               border-radius: 25px; box-shadow: 0 0 15px rgb(100, 170, 200);
+<div style="background-color: rgb(120, 180, 240);
+               border-radius: 10px; box-shadow: 0 0 10px rgb(100, 170, 200);
                color: white;
-                "
-     class="mb-3">
-    <p class="mb-3">
+                " class="p-2">
+    <div class="m-1">
         Autor: @Model.Author
-    </p>
-    <p class="mb-3">
+    </div>
+    <div class="m-1">
         Data publikacji: @Model.PublicationDate
-    </p>
-    <p class="mb-3">
+    </div>
+    <div class="m-1">
         Treść posta: @Model.Content
-    </p>
+    </div>
 </div>
 
 <form class="mt-4" asp-controller="Post" asp-action="Delete">
-    <input asp-for="Id" />
+    <input asp-for="Id"/>
     <button class="btn btn-danger" type="submit">Tak</button>
     <a class="btn btn-outline-primary" asp-action="Index">Nie</a>
 </form>

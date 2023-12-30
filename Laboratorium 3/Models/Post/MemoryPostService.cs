@@ -1,4 +1,6 @@
-﻿namespace Laboratorium_3.Models
+﻿using Data.Entities.Post;
+
+namespace Laboratorium_3.Models
 {
     public class MemoryPostService : IPostService
     {
@@ -20,9 +22,19 @@
             return item.Id;
         }
 
+        public void AddComment(Comment comment)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Delete(int id)
         {
             _items.Remove(id);
+        }
+
+        public void DeleteComment(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Post> FindAll()
@@ -35,10 +47,14 @@
             return _items[id];
         }
 
+        public int GetCommentId()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(Post item)
         {
             item.PublicationDate = _items[item.Id].PublicationDate;
-            item.Comments = _items[item.Id].Comments;
             _items[item.Id] = item;
         }
     }

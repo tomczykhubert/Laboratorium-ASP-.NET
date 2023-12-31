@@ -52,6 +52,11 @@ namespace Laboratorium_3.Models
             throw new NotImplementedException();
         }
 
+        public PagingList<Post> FindPage(int page, int size, List<Post> posts)
+        {
+            throw new NotImplementedException();
+        }
+
         public int GetCommentId()
         {
             throw new NotImplementedException();

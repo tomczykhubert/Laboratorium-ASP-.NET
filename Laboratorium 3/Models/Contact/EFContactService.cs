@@ -2,7 +2,6 @@
 using Data.Entities;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.AccessControl;
-using Labolatorium3___App.Models;
 
 namespace Laboratorium_3.Models
 

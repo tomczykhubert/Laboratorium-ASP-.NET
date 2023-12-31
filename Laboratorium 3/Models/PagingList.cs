@@ -1,4 +1,4 @@
-namespace Labolatorium3___App.Models
+namespace Laboratorium_3.Models
 {
     public class PagingList<T>
     {

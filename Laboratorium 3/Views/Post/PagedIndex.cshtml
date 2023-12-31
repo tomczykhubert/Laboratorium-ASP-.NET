@@ -1,5 +1,4 @@
-﻿@model List<Post>
-
+﻿@model PagingList<Post>
 <h1 class="mb-3">
     Posty
 </h1>
@@ -9,32 +8,32 @@
     <a class="btn btn-primary rounded me-2" asp-controller="Post" asp-action="Create">
         Dodaj post
     </a>
-    <form asp-controller="Post" asp-action="Index">
+    <form asp-controller="Post" asp-action="PagedIndex">
         <select id="filter" name="tagId" class="rounded" style="height: 38px; background-color: rgb(51, 51, 51); color: white;" onchange="this.form.submit()">
         </select>
     </form>
 </div>
 
-@if (Model.Count > 0)
+@if (Model.Data.Count() > 0)
 {
-    foreach (var item in @Model)
+    foreach (var item in @Model.Data)
     {
         <div style="background-color: rgb(51, 51, 51);
                border-radius: 10px; box-shadow: 0 0 10px rgb(51, 51, 51);
                color: white;"
              class="p-3 mb-5">
             <p class="mb-3">
-                @Html.DisplayNameFor(i => Model[0].Author): @item.Author
+                @Html.DisplayNameFor(i => Model.Data.GetEnumerator().Current.Author): @item.Author
 
             </p>
             <p class="mb-3">
-                @Html.DisplayNameFor(i => Model[0].PublicationDate): @item.PublicationDate.ToString("yyyy-MM-dd")
+                @Html.DisplayNameFor(i => Model.Data.GetEnumerator().Current.PublicationDate): @item.PublicationDate.ToString("yyyy-MM-dd")
             </p>
             <p class="mb-3">
-                @Html.DisplayNameFor(i => Model[0].Content): @item.Content
+                @Html.DisplayNameFor(i => Model.Data.GetEnumerator().Current.Content): @item.Content
             </p>
             <p class="mb-3">
-                @Html.DisplayNameFor(i => Model[0].Tag): @item.Tag.TagName
+                @Html.DisplayNameFor(i => Model.Data.GetEnumerator().Current.Tag): @item.Tag.TagName
             </p>
             <a class="btn btn-primary rounded" asp-controller="Post" asp-action="Update" asp-route-id="@item.Id">Edytuj</a>
             <a class="btn btn-dark rounded" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id">Szczegóły</a>
@@ -42,6 +41,50 @@
         </div>
     }
 }
+
+<nav aria-label="Books page navigation">
+    <ul class="pagination">
+        @if (Model.IsPrevious)
+        {
+            <li class="page-item">
+                <a class="page-link"
+                   asp-controller="Post"
+                   asp-action="PagedIndex"
+                   asp-route-page="@(Model.Page - 1)"
+                   asp-route-size="@Model.Size">
+                    Poprzednia
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link">Poprzednia</a>
+            </li>
+        }
+        <li class="page-item disabled">
+            <a class="page-link">@Model.Page</a>
+        </li>
+        @if (Model.IsNext)
+        {
+            <li class="page-item">
+                <a class="page-link"
+                   asp-controller="Post"
+                   asp-action="PagedIndex"
+                   asp-route-page="@(Model.Page + 1)"
+                   asp-route-size="@Model.Size">
+                    Następna
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item disabled">
+                <a class="page-link">Następna</a>
+            </li>
+        }
+    </ul>
+</nav>
 
 @section Scripts{
     <script>

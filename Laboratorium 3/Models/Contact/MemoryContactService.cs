@@ -1,5 +1,4 @@
 ﻿using Data.Entities;
-using Labolatorium3___App.Models;
 using Laboratorium_3.Models;
 using Microsoft.EntityFrameworkCore;
 

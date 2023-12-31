@@ -1,5 +1,4 @@
 ﻿using Data.Entities;
-using Labolatorium3___App.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Laboratorium_3.Models

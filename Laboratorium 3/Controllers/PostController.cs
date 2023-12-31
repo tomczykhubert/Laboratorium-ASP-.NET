@@ -19,13 +19,29 @@ namespace Laboratorium_3.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Index(int tagId)
+        public IActionResult Index(int tagId = 0)
         {
+            ViewBag.TagId = tagId;
             if (tagId == 0)
                 return View(_postService.FindAll());
             else
                 return View(_postService.FindByTag(tagId));
         }
+
+        [AllowAnonymous]
+
+        public IActionResult PagedIndex(int tagId = 0, int page = 1, int size = 3)
+        {
+            List<Post> list = new List<Post>();
+            if (tagId == 0)
+                list = _postService.FindAll();
+            else
+                list = _postService.FindByTag(tagId);
+            ViewBag.TagId = tagId;
+            PagingList<Post> pagingList = _postService.FindPage(page, size, list);
+            return View(pagingList);
+        }
+
         [Authorize]
         [HttpGet]
         public IActionResult Create()

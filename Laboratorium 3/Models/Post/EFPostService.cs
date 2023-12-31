@@ -13,6 +13,14 @@ namespace Laboratorium_3.Models
             _context = context;
         }
 
+        public PagingList<Post> FindPage(int page, int size, List<Post> posts)
+        {
+            return PagingList<Post>.Create(
+                (p, s) => posts.OrderBy(c => c.PublicationDate).Skip((p - 1) * s).Take(s)
+                , page, size, posts.Count()
+            );
+        }
+
         public int Add(Post model)
         {
             var e = _context.Posts.Add(PostMapper.ToEntity(model));

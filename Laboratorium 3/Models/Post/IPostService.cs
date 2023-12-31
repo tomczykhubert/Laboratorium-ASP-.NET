@@ -13,5 +13,6 @@ namespace Laboratorium_3.Models
         void DeleteComment(int id);
         int GetCommentId();
         List<Post> FindByTag(int tagId);
+        PagingList<Post> FindPage(int page, int size, List<Post> posts);
     }
 }

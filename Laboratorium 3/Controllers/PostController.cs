@@ -30,7 +30,7 @@ namespace Laboratorium_3.Controllers
 
         [AllowAnonymous]
 
-        public IActionResult PagedIndex(int tagId = 0, int page = 1, int size = 3)
+        public IActionResult PagedIndex(int tagId = 0, int page = 1, int size = 2)
         {
             List<Post> list = new List<Post>();
             if (tagId == 0)
@@ -75,7 +75,7 @@ namespace Laboratorium_3.Controllers
         public IActionResult Delete(Post model)
         {
             _postService.Delete(model.Id);
-            return RedirectToAction("Index");
+            return RedirectToAction("PagedIndex");
         }
 
         [Authorize(Roles = "admin")]
@@ -92,7 +92,7 @@ namespace Laboratorium_3.Controllers
             if (ModelState.IsValid)
             {
                 _postService.Update(model);
-                return RedirectToAction("Index");
+                return RedirectToAction("PagedIndex");
             }
             return View();
         }

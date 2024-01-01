@@ -11,7 +11,6 @@ namespace Laboratorium_3.Models
         void Update(Post model);
         void AddComment(Comment comment);
         void DeleteComment(int id);
-        int GetCommentId();
         List<Post> FindByTag(int tagId);
         PagingList<Post> FindPage(int page, int size, List<Post> posts);
     }

@@ -1,10 +1,15 @@
 ﻿using Data.Entities.Post;
+using Microsoft.EntityFrameworkCore;
 
 namespace Laboratorium_3.Models
 {
     public class MemoryPostService : IPostService
     {
-        private Dictionary<int, Post> _items = new Dictionary<int, Post>();
+        private Dictionary<int, Post> _posts = new Dictionary<int, Post>();
+        private Dictionary<int, Comment> _comments = new Dictionary<int, Comment>();
+
+        int id = 1;
+        int commentId = 1;
 
         private IDateTimeProvider _dateTimeProvider;
 
@@ -13,59 +18,64 @@ namespace Laboratorium_3.Models
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public int Add(Post item)
+        public PagingList<Post> FindPage(int page, int size, List<Post> posts)
         {
-            int id = _items.Keys.Count != 0 ? _items.Keys.Max() : 0;
-            item.Id = id + 1;
-            item.PublicationDate = _dateTimeProvider.dateNow();
-            _items.Add(item.Id, item);
-            return item.Id;
+            return PagingList<Post>.Create(
+                (p, s) => posts.OrderBy(c => c.PublicationDate).Skip((p - 1) * s).Take(s)
+                , page, size, posts.Count()
+            );
         }
 
-        public void AddComment(Comment comment)
+        public int Add(Post model)
         {
-            throw new NotImplementedException();
+            model.Id = id;
+            _posts.Add(id, model);
+            id++;
+            return model.Id;
         }
 
         public void Delete(int id)
         {
-            _items.Remove(id);
-        }
-
-        public void DeleteComment(int id)
-        {
-            throw new NotImplementedException();
+            _posts.Remove(id);
         }
 
         public List<Post> FindAll()
         {
-            return _items.Values.ToList();
+            return _posts.Values.ToList();
         }
 
         public Post? FindById(int id)
         {
-            return _items[id];
+            return _posts.ContainsKey(id) ? _posts[id] : null;
+
         }
 
         public List<Post> FindByTag(int tagId)
         {
-            throw new NotImplementedException();
+            return _posts.Values.Where(o => o.TagId == tagId).ToList();
         }
 
-        public PagingList<Post> FindPage(int page, int size, List<Post> posts)
+        public void Update(Post model)
         {
-            throw new NotImplementedException();
+            if (_posts.ContainsKey(model.Id))
+            {
+                model.PublicationDate = _posts[model.Id].PublicationDate;
+                _posts[model.Id] = model;
+            }
+
         }
 
-        public int GetCommentId()
+        public void AddComment(Comment model)
         {
-            throw new NotImplementedException();
+            model.CommentId = commentId;
+            _comments.Add(model.CommentId, model);
+            commentId++;
         }
 
-        public void Update(Post item)
+        public void DeleteComment(int id)
         {
-            item.PublicationDate = _items[item.Id].PublicationDate;
-            _items[item.Id] = item;
+            if (_comments.ContainsKey(id))
+                _comments.Remove(id);
         }
     }
 }

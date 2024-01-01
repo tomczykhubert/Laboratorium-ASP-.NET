@@ -57,7 +57,7 @@ namespace Laboratorium_3.Controllers
             if (ModelState.IsValid)
             {
                 _postService.Add(model);
-                return RedirectToAction("Index");
+                return RedirectToAction("PagedIndex");
             }
             return View();
         }
@@ -101,23 +101,31 @@ namespace Laboratorium_3.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            return View(_postService.FindById(id));
+            var model = _postService.FindById(id);
+            return model is null ? NotFound() : View(model);
         }
 
         [Authorize]
         [HttpPost]
         public IActionResult AddComment(int postId, string author, string content)
         {
-            Comment comment = new Comment() { CommentId = _postService.GetCommentId(), Author = author, Content = content, PostId = postId, PublicationDate = _dateTimeProvider.dateNow() };
-            _postService.AddComment(comment);
-            return Redirect(Request.Headers["Referer"]);
+            Comment comment = new Comment() { Author = author, Content = content, PostId = postId, PublicationDate = _dateTimeProvider.dateNow() };
+            var posts = _postService.FindAll();
+            foreach (var post in posts)
+            {
+                if(post.Id == postId)
+                {
+                    _postService.AddComment(comment);
+                    return RedirectToAction("Details", new { id = postId });
+                }
+            }
+            return RedirectToAction("PagedIndex");
         }
 
         [Authorize(Roles = "admin")]
         [HttpPost]
         public IActionResult DeleteComment(int commentId)
         {
-            Console.WriteLine(commentId);
             _postService.DeleteComment(commentId);
             return Redirect(Request.Headers["Referer"]);
         }

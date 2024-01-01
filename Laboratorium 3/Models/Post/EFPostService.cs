@@ -49,7 +49,7 @@ namespace Laboratorium_3.Models
 
         public Post? FindById(int id)
         {
-            var find = _context.Posts.Include(p => p.Tag).Single(p => p.PostId == id);
+            var find = _context.Posts.Include(p => p.Tag).SingleOrDefault(p => p.PostId == id);
             return find is null ? null : PostMapper.FromEntity(find);
         }
 
@@ -79,10 +79,6 @@ namespace Laboratorium_3.Models
                 _context.Comments.Remove(find);
                 _context.SaveChanges();
             }
-        }
-        public int GetCommentId()
-        {
-            return _context.Comments.Count() + 1;
         }
     }
 }

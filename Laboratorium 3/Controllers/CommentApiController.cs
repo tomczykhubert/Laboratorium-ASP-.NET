@@ -18,7 +18,7 @@ namespace Laboratorium_3.Controllers
         public IActionResult GetCommentsByPostId(int id)
         {
 
-            var comments = _context.Comments.Where(o => o.PostId == id).Select(o => new {id = o.CommentId, author = o.Author, content = o.Content, publicationDate = o.PublicationDate}).ToList();
+            var comments = _context.Comments.Where(o => o.PostId == id).Select(o => new {id = o.CommentId, author = o.Author, content = o.Content, publicationDate = o.PublicationDate, postId = o.PostId}).ToList();
             return comments.Count == 0 ? NotFound() : Ok(comments);
         }
     }

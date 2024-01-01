@@ -8,7 +8,7 @@
     <a class="btn btn-primary rounded me-2" asp-controller="Post" asp-action="Create">
         Dodaj post
     </a>
-    <form asp-controller="Post" asp-action="PagedIndex">
+    <form method="get" asp-controller="Post" asp-action="PagedIndex">
         <select id="filter" name="tagId" class="rounded" style="height: 38px; background-color: rgb(51, 51, 51); color: white;" onchange="this.form.submit()">
         </select>
     </form>
